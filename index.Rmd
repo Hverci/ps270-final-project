@@ -11,4 +11,4 @@ output:
 
 ## Project thoughts
 
-I am interested in exploring data related to human rights, social movements, and/or the role of social media in the modern political atmosphere. 
+I am interested in exploring data related to human rights, social movements, and the role of social media in the modern political atmosphere. I think some ways I could approach these topics is at looking at if social media is an effective method of raising awareness to human rights issues/violations as well as facilitating change through social movements like protests. I am more interested in looking at this on a global level rather than just a national level.  
