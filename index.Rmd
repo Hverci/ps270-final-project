@@ -10,5 +10,24 @@ output:
 
 
 ## Project thoughts
+I am interested in exploring data related to voter turnout in democracies vs. authoritarian governments. I want to look at if in authoritarian governments are less likely to vote due to the type of government they live in.
 
-I am interested in exploring data related to human rights, social movements, and the role of social media in the modern political atmosphere. I think some ways I could approach these topics is at looking at if social media is an effective method of raising awareness to human rights issues/violations as well as facilitating change through social movements like protests. I am more interested in looking at this on a global level rather than just a national level.  
+```{r}
+library(tidyverse)
+library(readxl)
+library(readr)
+
+Voter_Turnout <-  read_xlsx("data/idea_export_voter_turnout_database_world.xlsx")
+
+Electoral_Democracy <- read_xlsx("data/List_of_Electoral_Democracies_FIW24.xlsx")
+
+Freedom_House <- read_xlsx("data/All_data_FIW_2013-2025.xlsx", 
+    sheet = "FIW13-25")
+
+head(Voter_Turnout)
+head(Electoral_Democracy)
+head(Freedom_House)
+```
+## Project Proposal 
+Are citizens less likely to vote in an autocracy than in a democracy? My hypothesis is that citizens in an autocracy/authoritarian regime are less likely to vote than citizens in a democracy. I believe this would be the trend since citizens would likely perceive that their vote matters less, especially if they don’t have free and fair elections. The first thing that my data looks at is if countries are electoral democracies. Countries that do not hold elections will not be helpful to look at in this project, since there's no purpose in looking at voter turnout for countries where citizens cannot vote for their chief executive or legislature. Next, I have data from Freedom House where countries received several different scores based on items like electoral process, freedom of expression, personal autonomy, and individual rights. This data will help identify from the countries that hold elections which ones lean more democratic vs. authoritarian. The majority of these variables are numerical ratings. My outcome variable of interest is voter turnout. It is measured in a percentage.  A pattern that would support my hypothesis would be lower voter turnout in countries with lower scores in the various categories measuring political rights and civil liberties in countries from the Freedom House Data. A pattern that would disprove my hypothesis would be the reverse of this, where countries that have low political rights and civil liberties scores have higher voter turnout. 
+
