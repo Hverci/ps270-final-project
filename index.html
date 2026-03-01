@@ -116,7 +116,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.30/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["data/All_data_FIW_2013-2025.xlsx","data/CIRI Data 1981_2011 2014.04.14-1.RData","data/country ratings data.csv","data/Country_and_Territory_Ratings_and_Statuses_FIW_1973-2025_0 (1).xlsx","data/country_score.rda","data/HumanRightsProtectionScores_v2.03.RData","data/idea_export_voter_turnout_database_world.xlsx","data/List_of_Electoral_Democracies_FIW24.xlsx","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.30/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1545,8 +1545,66 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 <div class="d-article">
 <h2 id="project-thoughts">Project thoughts</h2>
-<p>I am interested in exploring data related to human rights, social movements, and the role of social media in the modern political atmosphere. I think some ways I could approach these topics is at looking at if social media is an effective method of raising awareness to human rights issues/violations as well as facilitating change through social movements like protests. I am more interested in looking at this on a global level rather than just a national level.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<p>I am interested in exploring data related to voter turnout in democracies vs. authoritarian governments. I want to look at if in authoritarian governments are less likely to vote due to the type of government they live in.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://readxl.tidyverse.org'>readxl</a></span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://readr.tidyverse.org'>readr</a></span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>Voter_Turnout</span> <span class='op'>&lt;-</span>  <span class='fu'><a href='https://readxl.tidyverse.org/reference/read_excel.html'>read_xlsx</a></span><span class='op'>(</span><span class='st'>"data/idea_export_voter_turnout_database_world.xlsx"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>Electoral_Democracy</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readxl.tidyverse.org/reference/read_excel.html'>read_xlsx</a></span><span class='op'>(</span><span class='st'>"data/List_of_Electoral_Democracies_FIW24.xlsx"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>Freedom_House</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readxl.tidyverse.org/reference/read_excel.html'>read_xlsx</a></span><span class='op'>(</span><span class='st'>"data/All_data_FIW_2013-2025.xlsx"</span>, </span>
+<span>    sheet <span class='op'>=</span> <span class='st'>"FIW13-25"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>Voter_Turnout</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code># A tibble: 6 × 5
+  Country     ISO2  ISO3  year       `Voter Turnout`
+  &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;          
+1 Afghanistan AF    AFG   2018-10-27 45.23%         
+2 Afghanistan AF    AFG   2010-09-18 35.14%         
+3 Afghanistan AF    AFG   2005-09-18 49.37%         
+4 Albania     AL    ALB   2021-04-25 46.32%         
+5 Albania     AL    ALB   2017-07-25 46.76%         
+6 Albania     AL    ALB   2013-06-23 53.31%         </code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>Electoral_Democracy</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code># A tibble: 6 × 2
+  `Electoral Democracies in Freedom in the World 2025` ...2           
+  &lt;chr&gt;                                                &lt;chr&gt;          
+1 Country                                              Electoral Demo…
+2 Afghanistan                                          No             
+3 Albania                                              Yes            
+4 Algeria                                              No             
+5 Andorra                                              Yes            
+6 Angola                                               No             </code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>Freedom_House</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code># A tibble: 6 × 44
+  Freedom in the World 201…¹ ...2  ...3  ...4  ...5  ...6  ...7  ...8 
+  &lt;chr&gt;                      &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
+1 Country/Territory          Regi… C/T   Edit… Stat… PR r… CL r… A1   
+2 Abkhazia                   Eura… t     2025  PF    5     5     2    
+3 Afghanistan                Asia  c     2025  NF    7     7     0    
+4 Albania                    Euro… c     2025  PF    3     3     3    
+5 Algeria                    Afri… c     2025  NF    6     5     1    
+6 Andorra                    Euro… c     2025  F     1     1     4    
+# ℹ abbreviated name: ¹​`Freedom in the World 2013-2025 Raw Data`
+# ℹ 36 more variables: ...9 &lt;chr&gt;, ...10 &lt;chr&gt;, ...11 &lt;chr&gt;,
+#   ...12 &lt;chr&gt;, ...13 &lt;chr&gt;, ...14 &lt;chr&gt;, ...15 &lt;chr&gt;, ...16 &lt;chr&gt;,
+#   ...17 &lt;chr&gt;, ...18 &lt;chr&gt;, ...19 &lt;chr&gt;, ...20 &lt;chr&gt;, ...21 &lt;chr&gt;,
+#   ...22 &lt;chr&gt;, ...23 &lt;chr&gt;, ...24 &lt;chr&gt;, ...25 &lt;chr&gt;, ...26 &lt;chr&gt;,
+#   ...27 &lt;chr&gt;, ...28 &lt;chr&gt;, ...29 &lt;chr&gt;, ...30 &lt;chr&gt;, ...31 &lt;chr&gt;,
+#   ...32 &lt;chr&gt;, ...33 &lt;chr&gt;, ...34 &lt;chr&gt;, ...35 &lt;chr&gt;, …</code></pre>
+</div>
+<h2 id="project-proposal">Project Proposal</h2>
+<p>Are citizens less likely to vote in an autocracy than in a democracy? My hypothesis is that citizens in an autocracy/authoritarian regime are less likely to vote than citizens in a democracy. I believe this would be the trend since citizens would likely perceive that their vote matters less, especially if they don’t have free and fair elections. The first thing that my data looks at is if countries are electoral democracies. Countries that do not hold elections will not be helpful to look at in this project, since there’s no purpose in looking at voter turnout for countries where citizens cannot vote for their chief executive or legislature. Next, I have data from Freedom House where countries received several different scores based on items like electoral process, freedom of expression, personal autonomy, and individual rights. This data will help identify from the countries that hold elections which ones lean more democratic vs. authoritarian. The majority of these variables are numerical ratings. My outcome variable of interest is voter turnout. It is measured in a percentage. A pattern that would support my hypothesis would be lower voter turnout in countries with lower scores in the various categories measuring political rights and civil liberties in countries from the Freedom House Data. A pattern that would disprove my hypothesis would be the reverse of this, where countries that have low political rights and civil liberties scores have higher voter turnout.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
