@@ -19,10 +19,10 @@ library(readr)
 
 Voter_Turnout <-  read_xlsx("data/idea_export_voter_turnout_database_world.xlsx")
 
-Electoral_Democracy <- read_xlsx("data/List_of_Electoral_Democracies_FIW24.xlsx")
+Electoral_Democracy <- read_xlsx("data/List_of_Electoral_Democracies_FIW24.xlsx", skip = 1)
 
 Freedom_House <- read_xlsx("data/All_data_FIW_2013-2025.xlsx", 
-    sheet = "FIW13-25")
+    sheet = "FIW13-25", skip = 1)
 
 head(Voter_Turnout)
 head(Electoral_Democracy)
@@ -30,4 +30,71 @@ head(Freedom_House)
 ```
 ## Project Proposal 
 Are citizens less likely to vote in an autocracy than in a democracy? My hypothesis is that citizens in an autocracy/authoritarian regime are less likely to vote than citizens in a democracy. I believe this would be the trend since citizens would likely perceive that their vote matters less, especially if they don’t have free and fair elections. The first thing that my data looks at is if countries are electoral democracies. Countries that do not hold elections will not be helpful to look at in this project, since there's no purpose in looking at voter turnout for countries where citizens cannot vote for their chief executive or legislature. Next, I have data from Freedom House where countries received several different scores based on items like electoral process, freedom of expression, personal autonomy, and individual rights. This data will help identify from the countries that hold elections which ones lean more democratic vs. authoritarian. The majority of these variables are numerical ratings. My outcome variable of interest is voter turnout. It is measured in a percentage.  A pattern that would support my hypothesis would be lower voter turnout in countries with lower scores in the various categories measuring political rights and civil liberties in countries from the Freedom House Data. A pattern that would disprove my hypothesis would be the reverse of this, where countries that have low political rights and civil liberties scores have higher voter turnout. 
+
+```{r}
+voter_turnout_new <- Voter_Turnout |>
+  select(-ISO2, -ISO3)
+
+voter_turnout_new
+```
+```{r}
+Electoral_Democracy_new <- Electoral_Democracy |>
+  rename(`Electoral Democracy` = `Electoral Democracy Designation in FIW 2025`)
+
+Electoral_Democracy_new
+```
+
+
+
+```{r}
+voter_turnout_2 <- voter_turnout_new |>
+  rename(Country2 = Country)
+
+voter_turnout_2
+```
+
+
+```{r}
+voter_turnout_names <- voter_turnout_2 |>
+  mutate(
+    Country = case_when(
+      `Country2`== "South Korea" ~ "Korea, Republic of",
+      `Country2`=="Côte d'Ivoire" ~ "	Cote d'Ivoire",
+      `Country2`=="Czechia" ~ "Czech Republic", 
+      `Country2`=="Iran, Islamic Republic of" ~ "Iran", 
+      `Country2`=="Korea, Republic of" ~ "South Korea",
+      `Country2`=="Lao People's Dem. Republic" ~ "North Korea", 
+      `Country2`=="North Macedonia, Republic of" ~ "North Macedonia", 
+      `Country2`=="Republic of The Congo (Brazzaville)" ~ "	Congo (Brazzaville)", 
+      `Country2`=="Russian Federation" ~ "Russia",
+      `Country2`=="São Tomé and Príncipe" ~ "Sao Tome and Principe", 
+      `Country2`=="Syrian Arab Republic" ~ "Syria", 
+      `Country2`=="Tanzania, United Republic of" ~ "Tanzania",
+      `Country2`=="Viet Nam" ~ "Vietnam",
+      .default = `Country2`))
+
+voter_turnout_names
+```
+```{r}
+Joined_data <- Electoral_Democracy_new |>
+  inner_join(voter_turnout_names, by = "Country") |>
+  select(-Country2)
+
+Joined_data
+```
+```{r}
+Joined_data_clean <- Joined_data |>
+  mutate(`Voter Turnout` = as.numeric(str_remove(`Voter Turnout`, "%")))
+
+Joined_data_clean
+```
+```{r}
+ggplot(Joined_data_clean, aes(x = `Electoral Democracy`, y = `Voter Turnout`, fill = `Electoral Democracy`)) +
+  geom_boxplot() +
+  labs(
+    title = "Voter Turnout by Electoral Democracy Status",
+    x = "Electoral Democracy Designation (FIW 2025)",
+    y = "Voter Turnout (%)"
+  )
+```
 
