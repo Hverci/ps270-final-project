@@ -116,7 +116,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["data/All_data_FIW_2013-2025.xlsx","data/CIRI Data 1981_2011 2014.04.14-1.RData","data/country ratings data.csv","data/Country_and_Territory_Ratings_and_Statuses_FIW_1973-2025_0 (1).xlsx","data/country_score.rda","data/HumanRightsProtectionScores_v2.03.RData","data/idea_export_voter_turnout_database_world.xlsx","data/List_of_Electoral_Democracies_FIW24.xlsx","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.30/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["data/All_data_FIW_2013-2025.xlsx","data/idea_export_voter_turnout_database_world.xlsx","data/List_of_Electoral_Democracies_FIW24.xlsx","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-8-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.30/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1554,10 +1554,10 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span></span>
 <span><span class='va'>Voter_Turnout</span> <span class='op'>&lt;-</span>  <span class='fu'><a href='https://readxl.tidyverse.org/reference/read_excel.html'>read_xlsx</a></span><span class='op'>(</span><span class='st'>"data/idea_export_voter_turnout_database_world.xlsx"</span><span class='op'>)</span></span>
 <span></span>
-<span><span class='va'>Electoral_Democracy</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readxl.tidyverse.org/reference/read_excel.html'>read_xlsx</a></span><span class='op'>(</span><span class='st'>"data/List_of_Electoral_Democracies_FIW24.xlsx"</span><span class='op'>)</span></span>
+<span><span class='va'>Electoral_Democracy</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readxl.tidyverse.org/reference/read_excel.html'>read_xlsx</a></span><span class='op'>(</span><span class='st'>"data/List_of_Electoral_Democracies_FIW24.xlsx"</span>, skip <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></span>
 <span></span>
 <span><span class='va'>Freedom_House</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readxl.tidyverse.org/reference/read_excel.html'>read_xlsx</a></span><span class='op'>(</span><span class='st'>"data/All_data_FIW_2013-2025.xlsx"</span>, </span>
-<span>    sheet <span class='op'>=</span> <span class='st'>"FIW13-25"</span><span class='op'>)</span></span>
+<span>    sheet <span class='op'>=</span> <span class='st'>"FIW13-25"</span>, skip <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></span>
 <span></span>
 <span><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>Voter_Turnout</span><span class='op'>)</span></span></code></pre>
 </div>
@@ -1574,37 +1574,197 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>Electoral_Democracy</span><span class='op'>)</span></span></code></pre>
 </div>
 <pre><code># A tibble: 6 × 2
-  `Electoral Democracies in Freedom in the World 2025` ...2           
-  &lt;chr&gt;                                                &lt;chr&gt;          
-1 Country                                              Electoral Demo…
-2 Afghanistan                                          No             
-3 Albania                                              Yes            
-4 Algeria                                              No             
-5 Andorra                                              Yes            
-6 Angola                                               No             </code></pre>
+  Country             `Electoral Democracy Designation in FIW 2025`
+  &lt;chr&gt;               &lt;chr&gt;                                        
+1 Afghanistan         No                                           
+2 Albania             Yes                                          
+3 Algeria             No                                           
+4 Andorra             Yes                                          
+5 Angola              No                                           
+6 Antigua and Barbuda Yes                                          </code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>Freedom_House</span><span class='op'>)</span></span></code></pre>
 </div>
 <pre><code># A tibble: 6 × 44
-  Freedom in the World 201…¹ ...2  ...3  ...4  ...5  ...6  ...7  ...8 
-  &lt;chr&gt;                      &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
-1 Country/Territory          Regi… C/T   Edit… Stat… PR r… CL r… A1   
-2 Abkhazia                   Eura… t     2025  PF    5     5     2    
-3 Afghanistan                Asia  c     2025  NF    7     7     0    
-4 Albania                    Euro… c     2025  PF    3     3     3    
-5 Algeria                    Afri… c     2025  NF    6     5     1    
-6 Andorra                    Euro… c     2025  F     1     1     4    
-# ℹ abbreviated name: ¹​`Freedom in the World 2013-2025 Raw Data`
-# ℹ 36 more variables: ...9 &lt;chr&gt;, ...10 &lt;chr&gt;, ...11 &lt;chr&gt;,
-#   ...12 &lt;chr&gt;, ...13 &lt;chr&gt;, ...14 &lt;chr&gt;, ...15 &lt;chr&gt;, ...16 &lt;chr&gt;,
-#   ...17 &lt;chr&gt;, ...18 &lt;chr&gt;, ...19 &lt;chr&gt;, ...20 &lt;chr&gt;, ...21 &lt;chr&gt;,
-#   ...22 &lt;chr&gt;, ...23 &lt;chr&gt;, ...24 &lt;chr&gt;, ...25 &lt;chr&gt;, ...26 &lt;chr&gt;,
-#   ...27 &lt;chr&gt;, ...28 &lt;chr&gt;, ...29 &lt;chr&gt;, ...30 &lt;chr&gt;, ...31 &lt;chr&gt;,
-#   ...32 &lt;chr&gt;, ...33 &lt;chr&gt;, ...34 &lt;chr&gt;, ...35 &lt;chr&gt;, …</code></pre>
+  `Country/Territory` Region  `C/T` Edition Status `PR rating`
+  &lt;chr&gt;               &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt;
+1 Abkhazia            Eurasia t        2025 PF               5
+2 Afghanistan         Asia    c        2025 NF               7
+3 Albania             Europe  c        2025 PF               3
+4 Algeria             Africa  c        2025 NF               6
+5 Andorra             Europe  c        2025 F                1
+6 Angola              Africa  c        2025 NF               6
+# ℹ 38 more variables: `CL rating` &lt;dbl&gt;, A1 &lt;dbl&gt;, A2 &lt;dbl&gt;,
+#   A3 &lt;dbl&gt;, A &lt;dbl&gt;, B1 &lt;dbl&gt;, B2 &lt;dbl&gt;, B3 &lt;dbl&gt;, B4 &lt;dbl&gt;,
+#   B &lt;dbl&gt;, C1 &lt;dbl&gt;, C2 &lt;dbl&gt;, C3 &lt;dbl&gt;, C &lt;dbl&gt;, `Add Q` &lt;dbl&gt;,
+#   `Add A` &lt;chr&gt;, PR &lt;dbl&gt;, D1 &lt;dbl&gt;, D2 &lt;dbl&gt;, D3 &lt;dbl&gt;, D4 &lt;dbl&gt;,
+#   D &lt;dbl&gt;, E1 &lt;dbl&gt;, E2 &lt;dbl&gt;, E3 &lt;dbl&gt;, E &lt;dbl&gt;, F1 &lt;dbl&gt;,
+#   F2 &lt;dbl&gt;, F3 &lt;dbl&gt;, F4 &lt;dbl&gt;, F &lt;dbl&gt;, G1 &lt;dbl&gt;, G2 &lt;dbl&gt;,
+#   G3 &lt;dbl&gt;, G4 &lt;dbl&gt;, G &lt;dbl&gt;, CL &lt;dbl&gt;, Total &lt;dbl&gt;</code></pre>
 </div>
 <h2 id="project-proposal">Project Proposal</h2>
 <p>Are citizens less likely to vote in an autocracy than in a democracy? My hypothesis is that citizens in an autocracy/authoritarian regime are less likely to vote than citizens in a democracy. I believe this would be the trend since citizens would likely perceive that their vote matters less, especially if they don’t have free and fair elections. The first thing that my data looks at is if countries are electoral democracies. Countries that do not hold elections will not be helpful to look at in this project, since there’s no purpose in looking at voter turnout for countries where citizens cannot vote for their chief executive or legislature. Next, I have data from Freedom House where countries received several different scores based on items like electoral process, freedom of expression, personal autonomy, and individual rights. This data will help identify from the countries that hold elections which ones lean more democratic vs. authoritarian. The majority of these variables are numerical ratings. My outcome variable of interest is voter turnout. It is measured in a percentage. A pattern that would support my hypothesis would be lower voter turnout in countries with lower scores in the various categories measuring political rights and civil liberties in countries from the Freedom House Data. A pattern that would disprove my hypothesis would be the reverse of this, where countries that have low political rights and civil liberties scores have higher voter turnout.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>voter_turnout_new</span> <span class='op'>&lt;-</span> <span class='va'>Voter_Turnout</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>ISO2</span>, <span class='op'>-</span><span class='va'>ISO3</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>voter_turnout_new</span></span></code></pre>
+</div>
+<pre><code># A tibble: 2,463 × 3
+   Country     year       `Voter Turnout`
+   &lt;chr&gt;       &lt;chr&gt;      &lt;chr&gt;          
+ 1 Afghanistan 2018-10-27 45.23%         
+ 2 Afghanistan 2010-09-18 35.14%         
+ 3 Afghanistan 2005-09-18 49.37%         
+ 4 Albania     2021-04-25 46.32%         
+ 5 Albania     2017-07-25 46.76%         
+ 6 Albania     2013-06-23 53.31%         
+ 7 Albania     2009-06-28 50.77%         
+ 8 Albania     2005-07-03 48.73%         
+ 9 Albania     2001-07-08 54.95%         
+10 Albania     2001-07-08 54.95%         
+# ℹ 2,453 more rows</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>Electoral_Democracy_new</span> <span class='op'>&lt;-</span> <span class='va'>Electoral_Democracy</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/rename.html'>rename</a></span><span class='op'>(</span>`Electoral Democracy` <span class='op'>=</span> <span class='va'>`Electoral Democracy Designation in FIW 2025`</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>Electoral_Democracy_new</span></span></code></pre>
+</div>
+<pre><code># A tibble: 195 × 2
+   Country             `Electoral Democracy`
+   &lt;chr&gt;               &lt;chr&gt;                
+ 1 Afghanistan         No                   
+ 2 Albania             Yes                  
+ 3 Algeria             No                   
+ 4 Andorra             Yes                  
+ 5 Angola              No                   
+ 6 Antigua and Barbuda Yes                  
+ 7 Argentina           Yes                  
+ 8 Armenia             Yes                  
+ 9 Australia           Yes                  
+10 Austria             Yes                  
+# ℹ 185 more rows</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>voter_turnout_2</span> <span class='op'>&lt;-</span> <span class='va'>voter_turnout_new</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/rename.html'>rename</a></span><span class='op'>(</span>Country2 <span class='op'>=</span> <span class='va'>Country</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>voter_turnout_2</span></span></code></pre>
+</div>
+<pre><code># A tibble: 2,463 × 3
+   Country2    year       `Voter Turnout`
+   &lt;chr&gt;       &lt;chr&gt;      &lt;chr&gt;          
+ 1 Afghanistan 2018-10-27 45.23%         
+ 2 Afghanistan 2010-09-18 35.14%         
+ 3 Afghanistan 2005-09-18 49.37%         
+ 4 Albania     2021-04-25 46.32%         
+ 5 Albania     2017-07-25 46.76%         
+ 6 Albania     2013-06-23 53.31%         
+ 7 Albania     2009-06-28 50.77%         
+ 8 Albania     2005-07-03 48.73%         
+ 9 Albania     2001-07-08 54.95%         
+10 Albania     2001-07-08 54.95%         
+# ℹ 2,453 more rows</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>voter_turnout_names</span> <span class='op'>&lt;-</span> <span class='va'>voter_turnout_2</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span></span>
+<span>    Country <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/case-and-replace-when.html'>case_when</a></span><span class='op'>(</span></span>
+<span>      <span class='va'>`Country2`</span><span class='op'>==</span> <span class='st'>"South Korea"</span> <span class='op'>~</span> <span class='st'>"Korea, Republic of"</span>,</span>
+<span>      <span class='va'>`Country2`</span><span class='op'>==</span><span class='st'>"Côte d'Ivoire"</span> <span class='op'>~</span> <span class='st'>"  Cote d'Ivoire"</span>,</span>
+<span>      <span class='va'>`Country2`</span><span class='op'>==</span><span class='st'>"Czechia"</span> <span class='op'>~</span> <span class='st'>"Czech Republic"</span>, </span>
+<span>      <span class='va'>`Country2`</span><span class='op'>==</span><span class='st'>"Iran, Islamic Republic of"</span> <span class='op'>~</span> <span class='st'>"Iran"</span>, </span>
+<span>      <span class='va'>`Country2`</span><span class='op'>==</span><span class='st'>"Korea, Republic of"</span> <span class='op'>~</span> <span class='st'>"South Korea"</span>,</span>
+<span>      <span class='va'>`Country2`</span><span class='op'>==</span><span class='st'>"Lao People's Dem. Republic"</span> <span class='op'>~</span> <span class='st'>"North Korea"</span>, </span>
+<span>      <span class='va'>`Country2`</span><span class='op'>==</span><span class='st'>"North Macedonia, Republic of"</span> <span class='op'>~</span> <span class='st'>"North Macedonia"</span>, </span>
+<span>      <span class='va'>`Country2`</span><span class='op'>==</span><span class='st'>"Republic of The Congo (Brazzaville)"</span> <span class='op'>~</span> <span class='st'>"  Congo (Brazzaville)"</span>, </span>
+<span>      <span class='va'>`Country2`</span><span class='op'>==</span><span class='st'>"Russian Federation"</span> <span class='op'>~</span> <span class='st'>"Russia"</span>,</span>
+<span>      <span class='va'>`Country2`</span><span class='op'>==</span><span class='st'>"São Tomé and Príncipe"</span> <span class='op'>~</span> <span class='st'>"Sao Tome and Principe"</span>, </span>
+<span>      <span class='va'>`Country2`</span><span class='op'>==</span><span class='st'>"Syrian Arab Republic"</span> <span class='op'>~</span> <span class='st'>"Syria"</span>, </span>
+<span>      <span class='va'>`Country2`</span><span class='op'>==</span><span class='st'>"Tanzania, United Republic of"</span> <span class='op'>~</span> <span class='st'>"Tanzania"</span>,</span>
+<span>      <span class='va'>`Country2`</span><span class='op'>==</span><span class='st'>"Viet Nam"</span> <span class='op'>~</span> <span class='st'>"Vietnam"</span>,</span>
+<span>      .default <span class='op'>=</span> <span class='va'>`Country2`</span><span class='op'>)</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>voter_turnout_names</span></span></code></pre>
+</div>
+<pre><code># A tibble: 2,463 × 4
+   Country2    year       `Voter Turnout` Country    
+   &lt;chr&gt;       &lt;chr&gt;      &lt;chr&gt;           &lt;chr&gt;      
+ 1 Afghanistan 2018-10-27 45.23%          Afghanistan
+ 2 Afghanistan 2010-09-18 35.14%          Afghanistan
+ 3 Afghanistan 2005-09-18 49.37%          Afghanistan
+ 4 Albania     2021-04-25 46.32%          Albania    
+ 5 Albania     2017-07-25 46.76%          Albania    
+ 6 Albania     2013-06-23 53.31%          Albania    
+ 7 Albania     2009-06-28 50.77%          Albania    
+ 8 Albania     2005-07-03 48.73%          Albania    
+ 9 Albania     2001-07-08 54.95%          Albania    
+10 Albania     2001-07-08 54.95%          Albania    
+# ℹ 2,453 more rows</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>Joined_data</span> <span class='op'>&lt;-</span> <span class='va'>Electoral_Democracy_new</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>inner_join</a></span><span class='op'>(</span><span class='va'>voter_turnout_names</span>, by <span class='op'>=</span> <span class='st'>"Country"</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>Country2</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>Joined_data</span></span></code></pre>
+</div>
+<pre><code># A tibble: 2,292 × 4
+   Country     `Electoral Democracy` year       `Voter Turnout`
+   &lt;chr&gt;       &lt;chr&gt;                 &lt;chr&gt;      &lt;chr&gt;          
+ 1 Afghanistan No                    2018-10-27 45.23%         
+ 2 Afghanistan No                    2010-09-18 35.14%         
+ 3 Afghanistan No                    2005-09-18 49.37%         
+ 4 Albania     Yes                   2021-04-25 46.32%         
+ 5 Albania     Yes                   2017-07-25 46.76%         
+ 6 Albania     Yes                   2013-06-23 53.31%         
+ 7 Albania     Yes                   2009-06-28 50.77%         
+ 8 Albania     Yes                   2005-07-03 48.73%         
+ 9 Albania     Yes                   2001-07-08 54.95%         
+10 Albania     Yes                   2001-07-08 54.95%         
+# ℹ 2,282 more rows</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>Joined_data_clean</span> <span class='op'>&lt;-</span> <span class='va'>Joined_data</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>`Voter Turnout` <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_remove.html'>str_remove</a></span><span class='op'>(</span><span class='va'>`Voter Turnout`</span>, <span class='st'>"%"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>Joined_data_clean</span></span></code></pre>
+</div>
+<pre><code># A tibble: 2,292 × 4
+   Country     `Electoral Democracy` year       `Voter Turnout`
+   &lt;chr&gt;       &lt;chr&gt;                 &lt;chr&gt;                &lt;dbl&gt;
+ 1 Afghanistan No                    2018-10-27            45.2
+ 2 Afghanistan No                    2010-09-18            35.1
+ 3 Afghanistan No                    2005-09-18            49.4
+ 4 Albania     Yes                   2021-04-25            46.3
+ 5 Albania     Yes                   2017-07-25            46.8
+ 6 Albania     Yes                   2013-06-23            53.3
+ 7 Albania     Yes                   2009-06-28            50.8
+ 8 Albania     Yes                   2005-07-03            48.7
+ 9 Albania     Yes                   2001-07-08            55.0
+10 Albania     Yes                   2001-07-08            55.0
+# ℹ 2,282 more rows</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>Joined_data_clean</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>`Electoral Democracy`</span>, y <span class='op'>=</span> <span class='va'>`Voter Turnout`</span>, fill <span class='op'>=</span> <span class='va'>`Electoral Democracy`</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_boxplot.html'>geom_boxplot</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
+<span>    title <span class='op'>=</span> <span class='st'>"Voter Turnout by Electoral Democracy Status"</span>,</span>
+<span>    x <span class='op'>=</span> <span class='st'>"Electoral Democracy Designation (FIW 2025)"</span>,</span>
+<span>    y <span class='op'>=</span> <span class='st'>"Voter Turnout (%)"</span></span>
+<span>  <span class='op'>)</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-8-1.png" alt="" width="624" /></p>
+</div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
