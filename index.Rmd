@@ -97,4 +97,19 @@ ggplot(Joined_data_clean, aes(x = `Electoral Democracy`, y = `Voter Turnout`, fi
     y = "Voter Turnout (%)"
   )
 ```
+```{r}
+Non_Democracy_Mean_Turnout <- Joined_data_clean |>
+  filter(`Electoral Democracy`== "No") |>
+  summarize(non_democracy_turnout = mean(`Voter Turnout`, na.rm = TRUE)) 
+
+Democracy_Mean_Turnout <- Joined_data_clean |>
+  filter(`Electoral Democracy`== "Yes") |>
+  summarize(democracy_turnout = mean(`Voter Turnout`, na.rm = TRUE)) 
+
+
+Mean_Turnouts <- bind_cols(Non_Democracy_Mean_Turnout, Democracy_Mean_Turnout)
+Mean_Turnouts
+
+knitr::kable(Mean_Turnouts, digits = 2, col.names = c("Non Democracy Mean Turnout", "Democracy Mean Turnout"))
+```
 
