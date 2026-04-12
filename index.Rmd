@@ -112,4 +112,5 @@ Mean_Turnouts
 
 knitr::kable(Mean_Turnouts, digits = 2, col.names = c("Non Democracy Mean Turnout", "Democracy Mean Turnout"))
 ```
-
+## Table and Graph Anaylsis 
+Based on the boxplot for voter turnout by electoral democracy status and the table of mean voter turnout for democracies and non-democracies, countries that are classified as democracies have higher levels of voter participation. In the boxplot we can see that the median voter turnout for electoral democracies is higher than the median of non-electoral democracies voter turnout. This is also represented in the table of mean voter turnout, since electoral democracies had a greater mean value of voter turnout than non-electoral democracies did. 
