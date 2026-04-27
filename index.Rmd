@@ -133,9 +133,10 @@ Joined_data_extra_clean <- Joined_data_extra_clean |>
 
 
 ```{r}
-ggplot(Joined_data_extra_clean, aes(x = `Democracy Score`, y = `Voter Turnout`)) +
+regression_plot <- ggplot(Joined_data_extra_clean, aes(x = `Democracy Score`, y = `Voter Turnout`)) +
 geom_point(color = "steelblue1") +
   geom_smooth(method = "lm", se = FALSE, color = "indianred1", size = 1.5)
+regression_plot
 ```
 ```{r}
 regression <- lm(`Voter Turnout` ~ `Democracy Score`, data = Joined_data_extra_clean)
