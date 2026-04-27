@@ -114,3 +114,32 @@ knitr::kable(Mean_Turnouts, digits = 2, col.names = c("Non Democracy Mean Turnou
 ```
 ## Table and Graph Anaylsis 
 Based on the boxplot for voter turnout by electoral democracy status and the table of mean voter turnout for democracies and non-democracies, countries that are classified as democracies have higher levels of voter participation. In the boxplot we can see that the median voter turnout for electoral democracies is higher than the median of non-electoral democracies voter turnout. This is also represented in the table of mean voter turnout, since electoral democracies had a greater mean value of voter turnout than non-electoral democracies did. 
+
+```{r}
+Freedom_House <- Freedom_House |>
+  rename(Country = `Country/Territory`)
+```
+
+
+```{r}
+Joined_data_extra_clean <- Joined_data_clean |>
+  left_join(Freedom_House |> select(Country, Total), by = "Country") 
+```
+
+```{r}
+Joined_data_extra_clean <- Joined_data_extra_clean |>
+  rename(`Democracy Score` = Total)
+```
+
+
+```{r}
+ggplot(Joined_data_extra_clean, aes(x = `Democracy Score`, y = `Voter Turnout`)) +
+geom_point(color = "steelblue1") +
+  geom_smooth(method = "lm", se = FALSE, color = "indianred1", size = 1.5)
+```
+```{r}
+regression <- lm(`Voter Turnout` ~ `Democracy Score`, data = Joined_data_extra_clean)
+regression
+```
+## Regression Analysis 
+Based on this regression line, we can see that there is a positive relationship between a country's democracy score and its voter turnout. The y-intercept is 59.49, which in this context says that the baseline of voter turnout is around 59.49 percent. In addition, for every one point increase in a country's democracy score given to it by Freedom House(where 1 is a low democracy score and 100 is a high democracy score) voter turnout is expected to increase by 0.1634. While this is a positive relationship, the increase in voter turnout based on the democracy score appears relatively small. 
