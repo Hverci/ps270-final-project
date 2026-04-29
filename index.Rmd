@@ -15,7 +15,7 @@ My hypothesis is that citizens in countries classified as having a lower level o
 I predict this to be the relationship since lower levels of democracy are often linked to corruption which could jeopardize the legitimacy of elections. For citizens living in countries that hold elections that are not free and fair, they could perceive that their vote does not matter leading to lower levels of voter turnout. I believe that this topic is interesting because 100% voter turnout is incredibly rare, and I am interested in how there are some people who actively chose not to vote in their nation’s elections, despite the fact that the policies that their elected officials make will impact them. 
 
 
-```{r}
+```{r, echo = false}
 library(tidyverse)
 library(readxl)
 library(readr)
@@ -30,7 +30,7 @@ Freedom_House <- read_xlsx("data/All_data_FIW_2013-2025.xlsx",
 ```
 
 ## Data
-```{r}
+```{r, echo = false}
 voter_turnout_names <- Voter_Turnout |>
   select(-ISO2, -ISO3) |>
   rename(Country2 = Country) |>
@@ -84,7 +84,7 @@ Since my hypothesis is that as the level of democracy increases then voter turno
 ## Visualizations 
 
 ### Distribution of Voter Turnout 
-```{r}
+```{r, echo = false}
 ggplot(data = Joined_data_extra_clean, aes(x = `Voter Turnout`)) +
   geom_histogram(binwidth = 5, fill = "indianred", color = "lightgrey") +
   labs(x = "Voter Turnout",
@@ -94,7 +94,7 @@ ggplot(data = Joined_data_extra_clean, aes(x = `Voter Turnout`)) +
 
 
 ### Boxplot of Voter Turnout by Electoral Democracy Status
-```{r}
+```{r, echo = false}
 ggplot(Joined_data_clean, aes(x = `Electoral Democracy`, y = `Voter Turnout`, fill = `Electoral Democracy`)) +
   geom_boxplot() +
   labs(
@@ -103,7 +103,7 @@ ggplot(Joined_data_clean, aes(x = `Electoral Democracy`, y = `Voter Turnout`, fi
   )
 ```
 ### Table Comparing Mean 
-```{r}
+```{r, echo = false}
 Non_Democracy_Mean_Turnout <- Joined_data_clean |>
   filter(`Electoral Democracy`== "No") |>
   summarize(non_democracy_turnout = mean(`Voter Turnout`, na.rm = TRUE)) 
@@ -124,14 +124,14 @@ Countries that received the electoral democracy status from Freedom House meet a
 ## Regression
 
 ### Regression Plot
-```{r}
+```{r, echo = false}
 regression_plot <- ggplot(Joined_data_extra_clean, aes(x = `Democracy Score`, y = `Voter Turnout`)) +
 geom_point(color = "darkgray", alpha = 0.5) +
   geom_smooth(method = "lm", se = FALSE, color = "indianred", size = 1.5)
 regression_plot
 ```
 ### Regression Table
-```{r}
+```{r, echo = false}
 regression <- lm(`Voter Turnout` ~ `Democracy Score`, data = Joined_data_extra_clean)
 regression
 
@@ -143,5 +143,10 @@ Based on this regression line, we can see that there is a positive relationship 
 
 ## Conclusion 
 Based on these results we found that there is a positive relationship between a country’s democracy score and its voter turnout. By looking at the voter turnout box plot and mean voter turnout by electoral democracy status we can see that on average countries that are classified as electoral democracies have higher levels of voter participation. We can also claim statistical significance based on our regression, since a p-value of 0 allows us to reject our null hypothesis. This allows us to claim that democracy level has a significant positive correlation with voter turnout. The major limitation of this study is trying to account for confounding variables since there are many differences between each country, so different variables could be influencing our results in ways that we are not aware of. If I want to improve this study, I look at the other variables from the Freedom House data(like the Civil Liberties or Political Rights category scores) to analyze which democratic score indicators have the greatest impact on voter turnout. In conclusion, I am able to affirm my original hypothesis that there is a positive relationship between democracy level and voter turnout.
+
+```{r print-code, ref.label=knitr::all_labels(), echo = TRUE, eval=FALSE}
+
+```
+
 
 
