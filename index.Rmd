@@ -73,6 +73,9 @@ My data set called “Electoral Democracy” comes from Freedom House, and it st
 
 My data set called “Freedom House” also comes from Freedom House. Freedom House is a U.S.-based, nonpartisan non-governmental organization that advocates for democracy, political freedom, and human rights worldwide. It annually assesses the level of political rights and civil liberties in the nations and territories of the world. This data features several different scores that countries received from Freedom House’s “Freedom in the World” report based on items like electoral process, freedom of expression, personal autonomy, and individual rights. This data was used to help me identify from the countries that hold elections which ones lean more democratic. For the point of this project I looked at the total score for each country. This variable is the aggregate score for all categories accessing democratic level. 
 
+### Research Design
+My research design is cross-sectional.  
+
 ### Dependent and Independent Variables 
 My independent variable is the total aggregate democratic score level from the “Freedom House” data set. This variable is on a scale from 0 to 100, where 100 represents the highest level of freedom and 0 the lowest. 
 
