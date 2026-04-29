@@ -1,7 +1,7 @@
 ---
-title: "PS270 Final Project"
+title: "The Relationship Between Democracy Level and Voter Turnout"
 author: "Hope Verciglio"
-description: "My final project"
+description: "This project aims to evaluate how voter turnout in a country is affected by its level of democracy."
 output:
   distill::distill_article:
     self_contained: false
@@ -9,8 +9,14 @@ output:
 
 
 
-## Project thoughts
-I am interested in exploring data related to voter turnout in democracies vs. authoritarian governments. I want to look at if in authoritarian governments are less likely to vote due to the type of government they live in.
+## Introduction
+In this project, I will study different countries that are classified as electoral democracies and assess how these countries' democracy level scores impact their election voter turnout. 
+
+### Hypothesis
+My hypothesis is that citizens in countries classified as having a lower level of democracy are going to be less likely to vote than citizens who live in countries that have a higher democracy score. I predict that there will be a positive relationship between my variables. In other words, as the level of democracy increases then voter turnout will also increase. 
+
+I predict this to be the relationship since lower levels of democracy are often linked to corruption which could jeopardize the legitimacy of elections. For citizens living in countries that hold elections that are not free and fair, they could perceive that their vote does not matter leading to lower levels of voter turnout. I believe that this topic is interesting because 100% voter turnout is incredibly rare, and I am interested in how there are some people who actively chose not to vote in their nation’s elections, despite the fact that the policies that their elected officials make will impact them. 
+
 
 ```{r}
 library(tidyverse)
@@ -23,39 +29,13 @@ Electoral_Democracy <- read_xlsx("data/List_of_Electoral_Democracies_FIW24.xlsx"
 
 Freedom_House <- read_xlsx("data/All_data_FIW_2013-2025.xlsx", 
     sheet = "FIW13-25", skip = 1)
-
-head(Voter_Turnout)
-head(Electoral_Democracy)
-head(Freedom_House)
-```
-## Project Proposal 
-Are citizens less likely to vote in an autocracy than in a democracy? My hypothesis is that citizens in an autocracy/authoritarian regime are less likely to vote than citizens in a democracy. I believe this would be the trend since citizens would likely perceive that their vote matters less, especially if they don’t have free and fair elections. The first thing that my data looks at is if countries are electoral democracies. Countries that do not hold elections will not be helpful to look at in this project, since there's no purpose in looking at voter turnout for countries where citizens cannot vote for their chief executive or legislature. Next, I have data from Freedom House where countries received several different scores based on items like electoral process, freedom of expression, personal autonomy, and individual rights. This data will help identify from the countries that hold elections which ones lean more democratic vs. authoritarian. The majority of these variables are numerical ratings. My outcome variable of interest is voter turnout. It is measured in a percentage.  A pattern that would support my hypothesis would be lower voter turnout in countries with lower scores in the various categories measuring political rights and civil liberties in countries from the Freedom House Data. A pattern that would disprove my hypothesis would be the reverse of this, where countries that have low political rights and civil liberties scores have higher voter turnout. 
-
-```{r}
-voter_turnout_new <- Voter_Turnout |>
-  select(-ISO2, -ISO3)
-
-voter_turnout_new
-```
-```{r}
-Electoral_Democracy_new <- Electoral_Democracy |>
-  rename(`Electoral Democracy` = `Electoral Democracy Designation in FIW 2025`)
-
-Electoral_Democracy_new
 ```
 
-
-
+## Data
 ```{r}
-voter_turnout_2 <- voter_turnout_new |>
-  rename(Country2 = Country)
-
-voter_turnout_2
-```
-
-
-```{r}
-voter_turnout_names <- voter_turnout_2 |>
+voter_turnout_names <- Voter_Turnout |>
+  select(-ISO2, -ISO3) |>
+  rename(Country2 = Country) |>
   mutate(
     Country = case_when(
       `Country2`== "South Korea" ~ "Korea, Republic of",
@@ -73,21 +53,37 @@ voter_turnout_names <- voter_turnout_2 |>
       `Country2`=="Viet Nam" ~ "Vietnam",
       .default = `Country2`))
 
-voter_turnout_names
-```
-```{r}
-Joined_data <- Electoral_Democracy_new |>
-  inner_join(voter_turnout_names, by = "Country") |>
-  select(-Country2)
+Electoral_Democracy_new <- Electoral_Democracy |>
+  rename(`Electoral Democracy` = `Electoral Democracy Designation in FIW 2025`)
 
-Joined_data
-```
-```{r}
-Joined_data_clean <- Joined_data |>
+Joined_data_clean <- Electoral_Democracy_new |>
+  inner_join(voter_turnout_names, by = "Country") |>
+  select(-Country2) |>
   mutate(`Voter Turnout` = as.numeric(str_remove(`Voter Turnout`, "%")))
 
-Joined_data_clean
+Freedom_House <- Freedom_House |>
+  rename(Country = `Country/Territory`)
+
+Joined_data_extra_clean <- Joined_data_clean |>
+  left_join(Freedom_House |> select(Country, Total), by = "Country") |>
+  rename(`Democracy Score` = Total)
 ```
+### Data Sources
+My data set called “Voter Turnout” comes from the International Institute for Democracy and Electoral Assistance (International IDEA). It includes the voter turnout(as a percent) as well as the dates for each election for many countries. 
+
+My data set called “Electoral Democracy” also comes from Freedom House, and it states which of the 195 countries in the world are classified as electoral democracies in 2025. Since this project is studying voter turnout, I used this data to filter out the countries that do not hold elections as they would not provide any data related to voter turnout. 
+
+My data set called “Freedom House” comes from Freedom House. Freedom House is a U.S.-based, nonpartisan non-governmental organization that advocates for democracy, political freedom, and human rights worldwide. It annually assesses the level of political rights and civil liberties in the nations and territories of the world. This data features several different scores that countries received from Freedom House’s “Freedom in the World” report based on items like electoral process, freedom of expression, personal autonomy, and individual rights. This data was used to help me identify from the countries that hold elections which ones lean more democratic. For the point of this project I looked at the total score for each country. This variable is the aggregate score for all categories accessing democratic level. 
+
+### Dependent and Independent Variables 
+My independent variable is the total aggregate democratic score level from the “Freedom House” data set. This variable is on a scale from 0 to 100, where 100 represents the highest level of freedom and 0 the lowest. 
+
+My dependent variable is the voter turnout in a country from my data set “Voter Turnout”. This variable is measured as a percentage.  
+
+### Criteria For My Hypothesis 
+Since my hypothesis is that as the level of democracy increases then voter turnout will also increase, a pattern that would support my hypothesis would be lower voter turnout in countries with lower total democratic level scores and higher voter turnout in countries with greater democratic scores. 
+
+
 ```{r}
 ggplot(Joined_data_clean, aes(x = `Electoral Democracy`, y = `Voter Turnout`, fill = `Electoral Democracy`)) +
   geom_boxplot() +
@@ -115,22 +111,6 @@ knitr::kable(Mean_Turnouts, digits = 2, col.names = c("Non Democracy Mean Turnou
 ## Table and Graph Anaylsis 
 Based on the boxplot for voter turnout by electoral democracy status and the table of mean voter turnout for democracies and non-democracies, countries that are classified as democracies have higher levels of voter participation. In the boxplot we can see that the median voter turnout for electoral democracies is higher than the median of non-electoral democracies voter turnout. This is also represented in the table of mean voter turnout, since electoral democracies had a greater mean value of voter turnout than non-electoral democracies did. 
 
-```{r}
-Freedom_House <- Freedom_House |>
-  rename(Country = `Country/Territory`)
-```
-
-
-```{r}
-Joined_data_extra_clean <- Joined_data_clean |>
-  left_join(Freedom_House |> select(Country, Total), by = "Country") 
-```
-
-```{r}
-Joined_data_extra_clean <- Joined_data_extra_clean |>
-  rename(`Democracy Score` = Total)
-```
-
 
 ```{r}
 regression_plot <- ggplot(Joined_data_extra_clean, aes(x = `Democracy Score`, y = `Voter Turnout`)) +
@@ -141,6 +121,8 @@ regression_plot
 ```{r}
 regression <- lm(`Voter Turnout` ~ `Democracy Score`, data = Joined_data_extra_clean)
 regression
+
+summary(regression)
 ```
 ## Regression Analysis 
 Based on this regression line, we can see that there is a positive relationship between a country's democracy score and its voter turnout. The y-intercept is 59.49, which in this context says that the baseline of voter turnout is around 59.49 percent. In addition, for every one point increase in a country's democracy score given to it by Freedom House(where 1 is a low democracy score and 100 is a high democracy score) voter turnout is expected to increase by 0.1634. While this is a positive relationship, the increase in voter turnout based on the democracy score appears relatively small. 
