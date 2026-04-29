@@ -121,7 +121,7 @@ knitr::kable(Mean_Turnouts, digits = 2, col.names = c("Non Democracy Mean Turnou
 ## Table and Graph Anaylsis 
 Countries that received the electoral democracy status from Freedom House meet a baseline of being more democratic than the countries that were categorized as non-electoral democracies. Comparing the voter turnout of electoral democracies vs. non-electoral democracies gives us insight into how the level of democracy in a country may impact its voter turnout. Based on the boxplot for voter turnout by electoral democracy status and the table of mean voter turnout for democracies and non-democracies, countries that are classified as electoral democracies have higher levels of voter participation. In the boxplot we can see that the median voter turnout for electoral democracies is higher than the median of non-electoral democracies voter turnout. This is also represented in the table of mean voter turnout, since electoral democracies had a greater mean value of voter turnout than non-electoral democracies did. ​​
 
-### Regression
+## Regression
 
 ### Regression Plot
 ```{r}
@@ -135,7 +135,8 @@ regression_plot
 regression <- lm(`Voter Turnout` ~ `Democracy Score`, data = Joined_data_extra_clean)
 regression
 
-tidy(regression)
+tidy(regression) |>
+  knitr::kable(digits = 3, col.names = c("Term", "Estimate", "Standard Error", "Statistic", "P-Value"))
 ```
 ## Regression Analysis 
 Based on this regression line, we can see that there is a positive relationship between a country's democracy score and its voter turnout. The y-intercept is 59.49, which in this context says that the baseline of voter turnout is around 59.49 percent. In addition, for every one point increase in a country's democracy score given to it by Freedom House(where 0 is a low democracy score and 100 is a high democracy score) voter turnout is expected to increase by 0.16.  In addition, the p-value is 0 which indicates high statistical significance. If I want to reject the null hypothesis that democracy level has no impact on voter turnout with 95% confidence, I would use an alpha value of 0.05. Since a p-value of 0 is less than 0.05, we can reject the null hypothesis. We can conclude that these results are incredibly unlikely to have occurred by chance, and therefore interpret that democracy level has a significant positive correlation with voter turnout. While we can see this positive relationship between the variables, in order to with confidence claim a causal relationship we would have to ensure that there are no confounding variables which would be difficult due to the high number of unmeasured differences between countries. 
