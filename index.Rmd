@@ -101,7 +101,7 @@ ggplot(Joined_data_clean, aes(x = `Electoral Democracy`, y = `Voter Turnout`, fi
     x = "Electoral Democracy Designation (FIW 2025)",
     y = "Voter Turnout (%)")
 ```
-### Table Comparing Mean 
+### Table Comparing Means 
 ```{r, echo = FALSE}
 Non_Democracy_Mean_Turnout <- Joined_data_clean |>
   filter(`Electoral Democracy`== "No") |>
@@ -144,87 +144,7 @@ Based on these results we found that there is a positive relationship between a 
 
 ## Code
 ```{r print-code, ref.label=knitr::all_labels(), echo = TRUE, eval=FALSE}
-library(tidyverse)
-library(readxl)
-library(readr)
-library(broom)
 
-Voter_Turnout <-  read_xlsx("data/idea_export_voter_turnout_database_world.xlsx")
-
-Electoral_Democracy <- read_xlsx("data/List_of_Electoral_Democracies_FIW24.xlsx", skip = 1)
-
-Freedom_House <- read_xlsx("data/All_data_FIW_2013-2025.xlsx", 
-    sheet = "FIW13-25", skip = 1)
-
-voter_turnout_names <- Voter_Turnout |>
-  select(-ISO2, -ISO3) |>
-  rename(Country2 = Country) |>
-  mutate(
-    Country = case_when(
-      `Country2`== "South Korea" ~ "Korea, Republic of",
-      `Country2`=="Côte d'Ivoire" ~ "	Cote d'Ivoire",
-      `Country2`=="Czechia" ~ "Czech Republic", 
-      `Country2`=="Iran, Islamic Republic of" ~ "Iran", 
-      `Country2`=="Korea, Republic of" ~ "South Korea",
-      `Country2`=="Lao People's Dem. Republic" ~ "North Korea", 
-      `Country2`=="North Macedonia, Republic of" ~ "North Macedonia", 
-      `Country2`=="Republic of The Congo (Brazzaville)" ~ "	Congo (Brazzaville)", 
-      `Country2`=="Russian Federation" ~ "Russia",
-      `Country2`=="São Tomé and Príncipe" ~ "Sao Tome and Principe", 
-      `Country2`=="Syrian Arab Republic" ~ "Syria", 
-      `Country2`=="Tanzania, United Republic of" ~ "Tanzania",
-      `Country2`=="Viet Nam" ~ "Vietnam",
-      .default = `Country2`))
-
-Electoral_Democracy_new <- Electoral_Democracy |>
-  rename(`Electoral Democracy` = `Electoral Democracy Designation in FIW 2025`)
-
-Joined_data_clean <- Electoral_Democracy_new |>
-  inner_join(voter_turnout_names, by = "Country") |>
-  select(-Country2) |>
-  mutate(`Voter Turnout` = as.numeric(str_remove(`Voter Turnout`, "%")))
-
-Freedom_House <- Freedom_House |>
-  rename(Country = `Country/Territory`)
-
-Joined_data_extra_clean <- Joined_data_clean |>
-  left_join(Freedom_House |> select(Country, Total), by = "Country") |>
-  rename(`Democracy Score` = Total)
-
-ggplot(data = Joined_data_extra_clean, aes(x = `Voter Turnout`)) +
-  geom_histogram(binwidth = 5, fill = "indianred", color = "lightgrey") +
-  labs(x = "Voter Turnout",
-       y = "Number of Observations")
-
-ggplot(Joined_data_clean, aes(x = `Electoral Democracy`, y = `Voter Turnout`, fill = `Electoral Democracy`)) +
-  geom_boxplot() +
-  labs(
-    x = "Electoral Democracy Designation (FIW 2025)",
-    y = "Voter Turnout (%)")
-
-Non_Democracy_Mean_Turnout <- Joined_data_clean |>
-  filter(`Electoral Democracy`== "No") |>
-  summarize(non_democracy_turnout = mean(`Voter Turnout`, na.rm = TRUE)) 
-
-Democracy_Mean_Turnout <- Joined_data_clean |>
-  filter(`Electoral Democracy`== "Yes") |>
-  summarize(democracy_turnout = mean(`Voter Turnout`, na.rm = TRUE)) 
-
-
-Mean_Turnouts <- bind_cols(Non_Democracy_Mean_Turnout, Democracy_Mean_Turnout)
-Mean_Turnouts
-
-knitr::kable(Mean_Turnouts, digits = 2, col.names = c("Non Democracy Mean Turnout", "Democracy Mean Turnout"))
-
-regression_plot <- ggplot(Joined_data_extra_clean, aes(x = `Democracy Score`, y = `Voter Turnout`)) +
-geom_point(color = "darkgray", alpha = 0.5) +
-  geom_smooth(method = "lm", se = FALSE, color = "indianred", size = 1.5)
-regression_plot
-
-regression <- lm(`Voter Turnout` ~ `Democracy Score`, data = Joined_data_extra_clean)
-
-tidy(regression) |>
-  knitr::kable(digits = 3, col.names = c("Term", "Estimate", "Standard Error", "Statistic", "P-Value"))
 ```
 
 
