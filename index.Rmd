@@ -6,9 +6,6 @@ output:
   distill::distill_article:
     self_contained: false
 ---
-
-
-
 ## Introduction
 In this project, I will study different countries that are classified as electoral democracies and assess how these countries' democracy level scores impact their election voter turnout. 
 
@@ -22,6 +19,7 @@ I predict this to be the relationship since lower levels of democracy are often 
 library(tidyverse)
 library(readxl)
 library(readr)
+library(broom)
 
 Voter_Turnout <-  read_xlsx("data/idea_export_voter_turnout_database_world.xlsx")
 
@@ -71,9 +69,9 @@ Joined_data_extra_clean <- Joined_data_clean |>
 ### Data Sources
 My data set called “Voter Turnout” comes from the International Institute for Democracy and Electoral Assistance (International IDEA). It includes the voter turnout(as a percent) as well as the dates for each election for many countries. 
 
-My data set called “Electoral Democracy” also comes from Freedom House, and it states which of the 195 countries in the world are classified as electoral democracies in 2025. Since this project is studying voter turnout, I used this data to filter out the countries that do not hold elections as they would not provide any data related to voter turnout. 
+My data set called “Electoral Democracy” comes from Freedom House, and it states which of the 195 countries in the world are classified as electoral democracies in 2025. This data either classifies as an electoral democracy(Yes) or not(No). Freedom House's "electoral democracy" designation identifies countries meeting minimum standards for political rights and civil liberties. It requires a score of 7+ in the Electoral Process subcategory, a total political rights score of 20+, and a civil liberties score of 30+. This provides insight to which countries hold free and fair elections. Throughout this project electoral democracies will refer to countries that received this designation from Freedom House, while non-electoral democracies will refer to countries that did not meet these standards. 
 
-My data set called “Freedom House” comes from Freedom House. Freedom House is a U.S.-based, nonpartisan non-governmental organization that advocates for democracy, political freedom, and human rights worldwide. It annually assesses the level of political rights and civil liberties in the nations and territories of the world. This data features several different scores that countries received from Freedom House’s “Freedom in the World” report based on items like electoral process, freedom of expression, personal autonomy, and individual rights. This data was used to help me identify from the countries that hold elections which ones lean more democratic. For the point of this project I looked at the total score for each country. This variable is the aggregate score for all categories accessing democratic level. 
+My data set called “Freedom House” also comes from Freedom House. Freedom House is a U.S.-based, nonpartisan non-governmental organization that advocates for democracy, political freedom, and human rights worldwide. It annually assesses the level of political rights and civil liberties in the nations and territories of the world. This data features several different scores that countries received from Freedom House’s “Freedom in the World” report based on items like electoral process, freedom of expression, personal autonomy, and individual rights. This data was used to help me identify from the countries that hold elections which ones lean more democratic. For the point of this project I looked at the total score for each country. This variable is the aggregate score for all categories accessing democratic level. 
 
 ### Dependent and Independent Variables 
 My independent variable is the total aggregate democratic score level from the “Freedom House” data set. This variable is on a scale from 0 to 100, where 100 represents the highest level of freedom and 0 the lowest. 
@@ -83,16 +81,28 @@ My dependent variable is the voter turnout in a country from my data set “Vote
 ### Criteria For My Hypothesis 
 Since my hypothesis is that as the level of democracy increases then voter turnout will also increase, a pattern that would support my hypothesis would be lower voter turnout in countries with lower total democratic level scores and higher voter turnout in countries with greater democratic scores. 
 
+## Visualizations 
 
+### Distribution of Voter Turnout 
+```{r}
+ggplot(data = Joined_data_extra_clean, aes(x = `Voter Turnout`)) +
+  geom_histogram(binwidth = 5, fill = "indianred", color = "lightgrey") +
+  labs(x = "Voter Turnout",
+       y = "Number of Observations")
+```
+
+
+
+### Boxplot of Voter Turnout by Electoral Democracy Status
 ```{r}
 ggplot(Joined_data_clean, aes(x = `Electoral Democracy`, y = `Voter Turnout`, fill = `Electoral Democracy`)) +
   geom_boxplot() +
   labs(
-    title = "Voter Turnout by Electoral Democracy Status",
     x = "Electoral Democracy Designation (FIW 2025)",
     y = "Voter Turnout (%)"
   )
 ```
+### Table Comparing Mean 
 ```{r}
 Non_Democracy_Mean_Turnout <- Joined_data_clean |>
   filter(`Electoral Democracy`== "No") |>
@@ -109,20 +119,28 @@ Mean_Turnouts
 knitr::kable(Mean_Turnouts, digits = 2, col.names = c("Non Democracy Mean Turnout", "Democracy Mean Turnout"))
 ```
 ## Table and Graph Anaylsis 
-Based on the boxplot for voter turnout by electoral democracy status and the table of mean voter turnout for democracies and non-democracies, countries that are classified as democracies have higher levels of voter participation. In the boxplot we can see that the median voter turnout for electoral democracies is higher than the median of non-electoral democracies voter turnout. This is also represented in the table of mean voter turnout, since electoral democracies had a greater mean value of voter turnout than non-electoral democracies did. 
+Countries that received the electoral democracy status from Freedom House meet a baseline of being more democratic than the countries that were categorized as non-electoral democracies. Comparing the voter turnout of electoral democracies vs. non-electoral democracies gives us insight into how the level of democracy in a country may impact its voter turnout. Based on the boxplot for voter turnout by electoral democracy status and the table of mean voter turnout for democracies and non-democracies, countries that are classified as electoral democracies have higher levels of voter participation. In the boxplot we can see that the median voter turnout for electoral democracies is higher than the median of non-electoral democracies voter turnout. This is also represented in the table of mean voter turnout, since electoral democracies had a greater mean value of voter turnout than non-electoral democracies did. ​​
 
+### Regression
 
+### Regression Plot
 ```{r}
 regression_plot <- ggplot(Joined_data_extra_clean, aes(x = `Democracy Score`, y = `Voter Turnout`)) +
-geom_point(color = "steelblue1") +
-  geom_smooth(method = "lm", se = FALSE, color = "indianred1", size = 1.5)
+geom_point(color = "darkgray", alpha = 0.5) +
+  geom_smooth(method = "lm", se = FALSE, color = "indianred", size = 1.5)
 regression_plot
 ```
+### Regression Table
 ```{r}
 regression <- lm(`Voter Turnout` ~ `Democracy Score`, data = Joined_data_extra_clean)
 regression
 
-summary(regression)
+tidy(regression)
 ```
 ## Regression Analysis 
-Based on this regression line, we can see that there is a positive relationship between a country's democracy score and its voter turnout. The y-intercept is 59.49, which in this context says that the baseline of voter turnout is around 59.49 percent. In addition, for every one point increase in a country's democracy score given to it by Freedom House(where 1 is a low democracy score and 100 is a high democracy score) voter turnout is expected to increase by 0.1634. While this is a positive relationship, the increase in voter turnout based on the democracy score appears relatively small. 
+Based on this regression line, we can see that there is a positive relationship between a country's democracy score and its voter turnout. The y-intercept is 59.49, which in this context says that the baseline of voter turnout is around 59.49 percent. In addition, for every one point increase in a country's democracy score given to it by Freedom House(where 0 is a low democracy score and 100 is a high democracy score) voter turnout is expected to increase by 0.16.  In addition, the p-value is 0 which indicates high statistical significance. If I want to reject the null hypothesis that democracy level has no impact on voter turnout with 95% confidence, I would use an alpha value of 0.05. Since a p-value of 0 is less than 0.05, we can reject the null hypothesis. We can conclude that these results are incredibly unlikely to have occurred by chance, and therefore interpret that democracy level has a significant positive correlation with voter turnout. While we can see this positive relationship between the variables, in order to with confidence claim a causal relationship we would have to ensure that there are no confounding variables which would be difficult due to the high number of unmeasured differences between countries. 
+
+## Conclusion 
+Based on these results we found that there is a positive relationship between a country’s democracy score and its voter turnout. By looking at the voter turnout box plot and mean voter turnout by electoral democracy status we can see that on average countries that are classified as electoral democracies have higher levels of voter participation. We can also claim statistical significance based on our regression, since a p-value of 0 allows us to reject our null hypothesis. This allows us to claim that democracy level has a significant positive correlation with voter turnout. The major limitation of this study is trying to account for confounding variables since there are many differences between each country, so different variables could be influencing our results in ways that we are not aware of. If I want to improve this study, I look at the other variables from the Freedom House data(like the Civil Liberties or Political Rights category scores) to analyze which democratic score indicators have the greatest impact on voter turnout. In conclusion, I am able to affirm my original hypothesis that there is a positive relationship between democracy level and voter turnout.
+
+
