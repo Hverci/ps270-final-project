@@ -1576,10 +1576,6 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 <h3 id="table-comparing-mean">Table Comparing Mean</h3>
 <div class="layout-chunk" data-layout="l-body">
-<pre><code># A tibble: 1 × 2
-  non_democracy_turnout democracy_turnout
-                  &lt;dbl&gt;             &lt;dbl&gt;
-1                  64.7              73.8</code></pre>
 <table>
 <thead>
 <tr class="header">
@@ -1604,13 +1600,6 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 <h3 id="regression-table">Regression Table</h3>
 <div class="layout-chunk" data-layout="l-body">
-<pre><code>
-Call:
-lm(formula = `Voter Turnout` ~ `Democracy Score`, data = Joined_data_extra_clean)
-
-Coefficients:
-      (Intercept)  `Democracy Score`  
-          59.4974             0.1634  </code></pre>
 <table>
 <thead>
 <tr class="header">
@@ -1643,6 +1632,7 @@ Coefficients:
 <p>Based on this regression line, we can see that there is a positive relationship between a country’s democracy score and its voter turnout. The y-intercept is 59.49, which in this context says that the baseline of voter turnout is around 59.49 percent. In addition, for every one point increase in a country’s democracy score given to it by Freedom House(where 0 is a low democracy score and 100 is a high democracy score) voter turnout is expected to increase by 0.16. In addition, the p-value is 0 which indicates high statistical significance. If I want to reject the null hypothesis that democracy level has no impact on voter turnout with 95% confidence, I would use an alpha value of 0.05. Since a p-value of 0 is less than 0.05, we can reject the null hypothesis. We can conclude that these results are incredibly unlikely to have occurred by chance, and therefore interpret that democracy level has a significant positive correlation with voter turnout. While we can see this positive relationship between the variables, in order to with confidence claim a causal relationship we would have to ensure that there are no confounding variables which would be difficult due to the high number of unmeasured differences between countries.</p>
 <h2 id="conclusion">Conclusion</h2>
 <p>Based on these results we found that there is a positive relationship between a country’s democracy score and its voter turnout. By looking at the voter turnout box plot and mean voter turnout by electoral democracy status we can see that on average countries that are classified as electoral democracies have higher levels of voter participation. We can also claim statistical significance based on our regression, since a p-value of 0 allows us to reject our null hypothesis. This allows us to claim that democracy level has a significant positive correlation with voter turnout. The major limitation of this study is trying to account for confounding variables since there are many differences between each country, so different variables could be influencing our results in ways that we are not aware of. If I want to improve this study, I look at the other variables from the Freedom House data(like the Civil Liberties or Political Rights category scores) to analyze which democratic score indicators have the greatest impact on voter turnout. In conclusion, I am able to affirm my original hypothesis that there is a positive relationship between democracy level and voter turnout.</p>
+<h2 id="code">Code</h2>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span>
@@ -1709,7 +1699,6 @@ Coefficients:
 <span></span>
 <span></span>
 <span><span class='va'>Mean_Turnouts</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind_cols.html'>bind_cols</a></span><span class='op'>(</span><span class='va'>Non_Democracy_Mean_Turnout</span>, <span class='va'>Democracy_Mean_Turnout</span><span class='op'>)</span></span>
-<span><span class='va'>Mean_Turnouts</span></span>
 <span></span>
 <span><span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='va'>Mean_Turnouts</span>, digits <span class='op'>=</span> <span class='fl'>2</span>, col.names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Non Democracy Mean Turnout"</span>, <span class='st'>"Democracy Mean Turnout"</span><span class='op'>)</span><span class='op'>)</span></span>
 <span><span class='va'>regression_plot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>Joined_data_extra_clean</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>`Democracy Score`</span>, y <span class='op'>=</span> <span class='va'>`Voter Turnout`</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
@@ -1717,7 +1706,6 @@ Coefficients:
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span>method <span class='op'>=</span> <span class='st'>"lm"</span>, se <span class='op'>=</span> <span class='cn'>FALSE</span>, color <span class='op'>=</span> <span class='st'>"indianred"</span>, size <span class='op'>=</span> <span class='fl'>1.5</span><span class='op'>)</span></span>
 <span><span class='va'>regression_plot</span></span>
 <span><span class='va'>regression</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>`Voter Turnout`</span> <span class='op'>~</span> <span class='va'>`Democracy Score`</span>, data <span class='op'>=</span> <span class='va'>Joined_data_extra_clean</span><span class='op'>)</span></span>
-<span><span class='va'>regression</span></span>
 <span></span>
 <span><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>regression</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
 <span>  <span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span>digits <span class='op'>=</span> <span class='fl'>3</span>, col.names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Term"</span>, <span class='st'>"Estimate"</span>, <span class='st'>"Standard Error"</span>, <span class='st'>"Statistic"</span>, <span class='st'>"P-Value"</span><span class='op'>)</span><span class='op'>)</span></span>
@@ -1804,7 +1792,7 @@ Coefficients:
 <span>  <span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span>digits <span class='op'>=</span> <span class='fl'>3</span>, col.names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Term"</span>, <span class='st'>"Estimate"</span>, <span class='st'>"Standard Error"</span>, <span class='st'>"Statistic"</span>, <span class='st'>"P-Value"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
 </div>
 </div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
