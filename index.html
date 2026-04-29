@@ -116,7 +116,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["data/All_data_FIW_2013-2025.xlsx","data/idea_export_voter_turnout_database_world.xlsx","data/List_of_Electoral_Democracies_FIW24.xlsx","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-13-1.png","index_files/figure-html5/unnamed-chunk-3-1.png","index_files/figure-html5/unnamed-chunk-5-1.png","index_files/figure-html5/unnamed-chunk-8-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.30/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["data/All_data_FIW_2013-2025.xlsx","data/idea_export_voter_turnout_database_world.xlsx","data/List_of_Electoral_Democracies_FIW24.xlsx","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-13-1.png","index_files/figure-html5/unnamed-chunk-3-1.png","index_files/figure-html5/unnamed-chunk-4-1.png","index_files/figure-html5/unnamed-chunk-5-1.png","index_files/figure-html5/unnamed-chunk-6-1.png","index_files/figure-html5/unnamed-chunk-8-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.30/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1554,6 +1554,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span>
 <span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://readxl.tidyverse.org'>readxl</a></span><span class='op'>)</span></span>
 <span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://readr.tidyverse.org'>readr</a></span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://broom.tidymodels.org/'>broom</a></span><span class='op'>)</span></span>
 <span></span>
 <span><span class='va'>Voter_Turnout</span> <span class='op'>&lt;-</span>  <span class='fu'><a href='https://readxl.tidyverse.org/reference/read_excel.html'>read_xlsx</a></span><span class='op'>(</span><span class='st'>"data/idea_export_voter_turnout_database_world.xlsx"</span><span class='op'>)</span></span>
 <span></span>
@@ -1604,25 +1605,37 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 <h3 id="data-sources">Data Sources</h3>
 <p>My data set called “Voter Turnout” comes from the International Institute for Democracy and Electoral Assistance (International IDEA). It includes the voter turnout(as a percent) as well as the dates for each election for many countries.</p>
-<p>My data set called “Electoral Democracy” also comes from Freedom House, and it states which of the 195 countries in the world are classified as electoral democracies in 2025. Since this project is studying voter turnout, I used this data to filter out the countries that do not hold elections as they would not provide any data related to voter turnout.</p>
-<p>My data set called “Freedom House” comes from Freedom House. Freedom House is a U.S.-based, nonpartisan non-governmental organization that advocates for democracy, political freedom, and human rights worldwide. It annually assesses the level of political rights and civil liberties in the nations and territories of the world. This data features several different scores that countries received from Freedom House’s “Freedom in the World” report based on items like electoral process, freedom of expression, personal autonomy, and individual rights. This data was used to help me identify from the countries that hold elections which ones lean more democratic. For the point of this project I looked at the total score for each country. This variable is the aggregate score for all categories accessing democratic level.</p>
+<p>My data set called “Electoral Democracy” comes from Freedom House, and it states which of the 195 countries in the world are classified as electoral democracies in 2025. This data either classifies as an electoral democracy(Yes) or not(No). Freedom House’s “electoral democracy” designation identifies countries meeting minimum standards for political rights and civil liberties. It requires a score of 7+ in the Electoral Process subcategory, a total political rights score of 20+, and a civil liberties score of 30+. This provides insight to which countries hold free and fair elections. Throughout this project electoral democracies will refer to countries that received this designation from Freedom House, while non-electoral democracies will refer to countries that did not meet these standards.</p>
+<p>My data set called “Freedom House” also comes from Freedom House. Freedom House is a U.S.-based, nonpartisan non-governmental organization that advocates for democracy, political freedom, and human rights worldwide. It annually assesses the level of political rights and civil liberties in the nations and territories of the world. This data features several different scores that countries received from Freedom House’s “Freedom in the World” report based on items like electoral process, freedom of expression, personal autonomy, and individual rights. This data was used to help me identify from the countries that hold elections which ones lean more democratic. For the point of this project I looked at the total score for each country. This variable is the aggregate score for all categories accessing democratic level.</p>
 <h3 id="dependent-and-independent-variables">Dependent and Independent Variables</h3>
 <p>My independent variable is the total aggregate democratic score level from the “Freedom House” data set. This variable is on a scale from 0 to 100, where 100 represents the highest level of freedom and 0 the lowest.</p>
 <p>My dependent variable is the voter turnout in a country from my data set “Voter Turnout”. This variable is measured as a percentage.</p>
 <h3 id="criteria-for-my-hypothesis">Criteria For My Hypothesis</h3>
 <p>Since my hypothesis is that as the level of democracy increases then voter turnout will also increase, a pattern that would support my hypothesis would be lower voter turnout in countries with lower total democratic level scores and higher voter turnout in countries with greater democratic scores.</p>
+<h2 id="visualizations">Visualizations</h2>
+<h3 id="distribution-of-voter-turnout">Distribution of Voter Turnout</h3>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>Joined_data_extra_clean</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>`Voter Turnout`</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_histogram.html'>geom_histogram</a></span><span class='op'>(</span>binwidth <span class='op'>=</span> <span class='fl'>5</span>, fill <span class='op'>=</span> <span class='st'>"indianred"</span>, color <span class='op'>=</span> <span class='st'>"lightgrey"</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"Voter Turnout"</span>,</span>
+<span>       y <span class='op'>=</span> <span class='st'>"Number of Observations"</span><span class='op'>)</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-3-1.png" alt="" width="624" /></p>
+</div>
+<h3 id="boxplot-of-voter-turnout-by-electoral-democracy-status">Boxplot of Voter Turnout by Electoral Democracy Status</h3>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>Joined_data_clean</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>`Electoral Democracy`</span>, y <span class='op'>=</span> <span class='va'>`Voter Turnout`</span>, fill <span class='op'>=</span> <span class='va'>`Electoral Democracy`</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_boxplot.html'>geom_boxplot</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
-<span>    title <span class='op'>=</span> <span class='st'>"Voter Turnout by Electoral Democracy Status"</span>,</span>
 <span>    x <span class='op'>=</span> <span class='st'>"Electoral Democracy Designation (FIW 2025)"</span>,</span>
 <span>    y <span class='op'>=</span> <span class='st'>"Voter Turnout (%)"</span></span>
 <span>  <span class='op'>)</span></span></code></pre>
 </div>
-<p><img src="index_files/figure-html5/unnamed-chunk-3-1.png" alt="" width="624" /></p>
+<p><img src="index_files/figure-html5/unnamed-chunk-4-1.png" alt="" width="624" /></p>
 </div>
+<h3 id="table-comparing-mean">Table Comparing Mean</h3>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>Non_Democracy_Mean_Turnout</span> <span class='op'>&lt;-</span> <span class='va'>Joined_data_clean</span> <span class='op'>|&gt;</span></span>
@@ -1660,16 +1673,19 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </table>
 </div>
 <h2 id="table-and-graph-anaylsis">Table and Graph Anaylsis</h2>
-<p>Based on the boxplot for voter turnout by electoral democracy status and the table of mean voter turnout for democracies and non-democracies, countries that are classified as democracies have higher levels of voter participation. In the boxplot we can see that the median voter turnout for electoral democracies is higher than the median of non-electoral democracies voter turnout. This is also represented in the table of mean voter turnout, since electoral democracies had a greater mean value of voter turnout than non-electoral democracies did.</p>
+<p>Countries that received the electoral democracy status from Freedom House meet a baseline of being more democratic than the countries that were categorized as non-electoral democracies. Comparing the voter turnout of electoral democracies vs. non-electoral democracies gives us insight into how the level of democracy in a country may impact its voter turnout. Based on the boxplot for voter turnout by electoral democracy status and the table of mean voter turnout for democracies and non-democracies, countries that are classified as electoral democracies have higher levels of voter participation. In the boxplot we can see that the median voter turnout for electoral democracies is higher than the median of non-electoral democracies voter turnout. This is also represented in the table of mean voter turnout, since electoral democracies had a greater mean value of voter turnout than non-electoral democracies did. ​​</p>
+<h3 id="regression">Regression</h3>
+<h3 id="regression-plot">Regression Plot</h3>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>regression_plot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>Joined_data_extra_clean</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>`Democracy Score`</span>, y <span class='op'>=</span> <span class='va'>`Voter Turnout`</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"steelblue1"</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span>method <span class='op'>=</span> <span class='st'>"lm"</span>, se <span class='op'>=</span> <span class='cn'>FALSE</span>, color <span class='op'>=</span> <span class='st'>"indianred1"</span>, size <span class='op'>=</span> <span class='fl'>1.5</span><span class='op'>)</span></span>
+<span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"darkgray"</span>, alpha <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span>method <span class='op'>=</span> <span class='st'>"lm"</span>, se <span class='op'>=</span> <span class='cn'>FALSE</span>, color <span class='op'>=</span> <span class='st'>"indianred"</span>, size <span class='op'>=</span> <span class='fl'>1.5</span><span class='op'>)</span></span>
 <span><span class='va'>regression_plot</span></span></code></pre>
 </div>
-<p><img src="index_files/figure-html5/unnamed-chunk-5-1.png" alt="" width="624" /></p>
+<p><img src="index_files/figure-html5/unnamed-chunk-6-1.png" alt="" width="624" /></p>
 </div>
+<h3 id="regression-table">Regression Table</h3>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>regression</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>`Voter Turnout`</span> <span class='op'>~</span> <span class='va'>`Democracy Score`</span>, data <span class='op'>=</span> <span class='va'>Joined_data_extra_clean</span><span class='op'>)</span></span>
@@ -1683,30 +1699,18 @@ Coefficients:
       (Intercept)  `Democracy Score`  
           59.4974             0.1634  </code></pre>
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>regression</span><span class='op'>)</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>regression</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code>
-Call:
-lm(formula = `Voter Turnout` ~ `Democracy Score`, data = Joined_data_extra_clean)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--69.840 -10.879   1.229  12.009  40.036 
-
-Coefficients:
-                   Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)       59.497359   0.269669  220.63   &lt;2e-16 ***
-`Democracy Score`  0.163405   0.003553   45.99   &lt;2e-16 ***
----
-Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-
-Residual standard error: 15.92 on 29638 degrees of freedom
-  (156 observations deleted due to missingness)
-Multiple R-squared:  0.06662,   Adjusted R-squared:  0.06658 
-F-statistic:  2115 on 1 and 29638 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre><code># A tibble: 2 × 5
+  term              estimate std.error statistic p.value
+  &lt;chr&gt;                &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+1 (Intercept)         59.5     0.270       221.        0
+2 `Democracy Score`    0.163   0.00355      46.0       0</code></pre>
 </div>
 <h2 id="regression-analysis">Regression Analysis</h2>
-<p>Based on this regression line, we can see that there is a positive relationship between a country’s democracy score and its voter turnout. The y-intercept is 59.49, which in this context says that the baseline of voter turnout is around 59.49 percent. In addition, for every one point increase in a country’s democracy score given to it by Freedom House(where 1 is a low democracy score and 100 is a high democracy score) voter turnout is expected to increase by 0.1634. While this is a positive relationship, the increase in voter turnout based on the democracy score appears relatively small.</p>
+<p>Based on this regression line, we can see that there is a positive relationship between a country’s democracy score and its voter turnout. The y-intercept is 59.49, which in this context says that the baseline of voter turnout is around 59.49 percent. In addition, for every one point increase in a country’s democracy score given to it by Freedom House(where 0 is a low democracy score and 100 is a high democracy score) voter turnout is expected to increase by 0.16. In addition, the p-value is 0 which indicates high statistical significance. If I want to reject the null hypothesis that democracy level has no impact on voter turnout with 95% confidence, I would use an alpha value of 0.05. Since a p-value of 0 is less than 0.05, we can reject the null hypothesis. We can conclude that these results are incredibly unlikely to have occurred by chance, and therefore interpret that democracy level has a significant positive correlation with voter turnout. While we can see this positive relationship between the variables, in order to with confidence claim a causal relationship we would have to ensure that there are no confounding variables which would be difficult due to the high number of unmeasured differences between countries.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Based on these results we found that there is a positive relationship between a country’s democracy score and its voter turnout. By looking at the voter turnout box plot and mean voter turnout by electoral democracy status we can see that on average countries that are classified as electoral democracies have higher levels of voter participation. We can also claim statistical significance based on our regression, since a p-value of 0 allows us to reject our null hypothesis. This allows us to claim that democracy level has a significant positive correlation with voter turnout. The major limitation of this study is trying to account for confounding variables since there are many differences between each country, so different variables could be influencing our results in ways that we are not aware of. If I want to improve this study, I look at the other variables from the Freedom House data(like the Civil Liberties or Political Rights category scores) to analyze which democratic score indicators have the greatest impact on voter turnout. In conclusion, I am able to affirm my original hypothesis that there is a positive relationship between democracy level and voter turnout.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
