@@ -1574,7 +1574,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <div class="layout-chunk" data-layout="l-body">
 <p><img src="index_files/figure-html5/unnamed-chunk-4-1.png" alt="" width="624" /></p>
 </div>
-<h3 id="table-comparing-mean">Table Comparing Mean</h3>
+<h3 id="table-comparing-means">Table Comparing Means</h3>
 <div class="layout-chunk" data-layout="l-body">
 <table>
 <thead>
@@ -1705,87 +1705,6 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"darkgray"</span>, alpha <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span> <span class='op'>+</span></span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span>method <span class='op'>=</span> <span class='st'>"lm"</span>, se <span class='op'>=</span> <span class='cn'>FALSE</span>, color <span class='op'>=</span> <span class='st'>"indianred"</span>, size <span class='op'>=</span> <span class='fl'>1.5</span><span class='op'>)</span></span>
 <span><span class='va'>regression_plot</span></span>
-<span><span class='va'>regression</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>`Voter Turnout`</span> <span class='op'>~</span> <span class='va'>`Democracy Score`</span>, data <span class='op'>=</span> <span class='va'>Joined_data_extra_clean</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>regression</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span>digits <span class='op'>=</span> <span class='fl'>3</span>, col.names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Term"</span>, <span class='st'>"Estimate"</span>, <span class='st'>"Standard Error"</span>, <span class='st'>"Statistic"</span>, <span class='st'>"P-Value"</span><span class='op'>)</span><span class='op'>)</span></span>
-<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span>
-<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://readxl.tidyverse.org'>readxl</a></span><span class='op'>)</span></span>
-<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://readr.tidyverse.org'>readr</a></span><span class='op'>)</span></span>
-<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://broom.tidymodels.org/'>broom</a></span><span class='op'>)</span></span>
-<span></span>
-<span><span class='va'>Voter_Turnout</span> <span class='op'>&lt;-</span>  <span class='fu'><a href='https://readxl.tidyverse.org/reference/read_excel.html'>read_xlsx</a></span><span class='op'>(</span><span class='st'>"data/idea_export_voter_turnout_database_world.xlsx"</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='va'>Electoral_Democracy</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readxl.tidyverse.org/reference/read_excel.html'>read_xlsx</a></span><span class='op'>(</span><span class='st'>"data/List_of_Electoral_Democracies_FIW24.xlsx"</span>, skip <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='va'>Freedom_House</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readxl.tidyverse.org/reference/read_excel.html'>read_xlsx</a></span><span class='op'>(</span><span class='st'>"data/All_data_FIW_2013-2025.xlsx"</span>, </span>
-<span>    sheet <span class='op'>=</span> <span class='st'>"FIW13-25"</span>, skip <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='va'>voter_turnout_names</span> <span class='op'>&lt;-</span> <span class='va'>Voter_Turnout</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>ISO2</span>, <span class='op'>-</span><span class='va'>ISO3</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/rename.html'>rename</a></span><span class='op'>(</span>Country2 <span class='op'>=</span> <span class='va'>Country</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span></span>
-<span>    Country <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/case-and-replace-when.html'>case_when</a></span><span class='op'>(</span></span>
-<span>      <span class='va'>`Country2`</span><span class='op'>==</span> <span class='st'>"South Korea"</span> <span class='op'>~</span> <span class='st'>"Korea, Republic of"</span>,</span>
-<span>      <span class='va'>`Country2`</span><span class='op'>==</span><span class='st'>"Côte d'Ivoire"</span> <span class='op'>~</span> <span class='st'>"  Cote d'Ivoire"</span>,</span>
-<span>      <span class='va'>`Country2`</span><span class='op'>==</span><span class='st'>"Czechia"</span> <span class='op'>~</span> <span class='st'>"Czech Republic"</span>, </span>
-<span>      <span class='va'>`Country2`</span><span class='op'>==</span><span class='st'>"Iran, Islamic Republic of"</span> <span class='op'>~</span> <span class='st'>"Iran"</span>, </span>
-<span>      <span class='va'>`Country2`</span><span class='op'>==</span><span class='st'>"Korea, Republic of"</span> <span class='op'>~</span> <span class='st'>"South Korea"</span>,</span>
-<span>      <span class='va'>`Country2`</span><span class='op'>==</span><span class='st'>"Lao People's Dem. Republic"</span> <span class='op'>~</span> <span class='st'>"North Korea"</span>, </span>
-<span>      <span class='va'>`Country2`</span><span class='op'>==</span><span class='st'>"North Macedonia, Republic of"</span> <span class='op'>~</span> <span class='st'>"North Macedonia"</span>, </span>
-<span>      <span class='va'>`Country2`</span><span class='op'>==</span><span class='st'>"Republic of The Congo (Brazzaville)"</span> <span class='op'>~</span> <span class='st'>"  Congo (Brazzaville)"</span>, </span>
-<span>      <span class='va'>`Country2`</span><span class='op'>==</span><span class='st'>"Russian Federation"</span> <span class='op'>~</span> <span class='st'>"Russia"</span>,</span>
-<span>      <span class='va'>`Country2`</span><span class='op'>==</span><span class='st'>"São Tomé and Príncipe"</span> <span class='op'>~</span> <span class='st'>"Sao Tome and Principe"</span>, </span>
-<span>      <span class='va'>`Country2`</span><span class='op'>==</span><span class='st'>"Syrian Arab Republic"</span> <span class='op'>~</span> <span class='st'>"Syria"</span>, </span>
-<span>      <span class='va'>`Country2`</span><span class='op'>==</span><span class='st'>"Tanzania, United Republic of"</span> <span class='op'>~</span> <span class='st'>"Tanzania"</span>,</span>
-<span>      <span class='va'>`Country2`</span><span class='op'>==</span><span class='st'>"Viet Nam"</span> <span class='op'>~</span> <span class='st'>"Vietnam"</span>,</span>
-<span>      .default <span class='op'>=</span> <span class='va'>`Country2`</span><span class='op'>)</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='va'>Electoral_Democracy_new</span> <span class='op'>&lt;-</span> <span class='va'>Electoral_Democracy</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/rename.html'>rename</a></span><span class='op'>(</span>`Electoral Democracy` <span class='op'>=</span> <span class='va'>`Electoral Democracy Designation in FIW 2025`</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='va'>Joined_data_clean</span> <span class='op'>&lt;-</span> <span class='va'>Electoral_Democracy_new</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>inner_join</a></span><span class='op'>(</span><span class='va'>voter_turnout_names</span>, by <span class='op'>=</span> <span class='st'>"Country"</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>Country2</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>`Voter Turnout` <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_remove.html'>str_remove</a></span><span class='op'>(</span><span class='va'>`Voter Turnout`</span>, <span class='st'>"%"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='va'>Freedom_House</span> <span class='op'>&lt;-</span> <span class='va'>Freedom_House</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/rename.html'>rename</a></span><span class='op'>(</span>Country <span class='op'>=</span> <span class='va'>`Country/Territory`</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='va'>Joined_data_extra_clean</span> <span class='op'>&lt;-</span> <span class='va'>Joined_data_clean</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>left_join</a></span><span class='op'>(</span><span class='va'>Freedom_House</span> <span class='op'>|&gt;</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>Country</span>, <span class='va'>Total</span><span class='op'>)</span>, by <span class='op'>=</span> <span class='st'>"Country"</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/rename.html'>rename</a></span><span class='op'>(</span>`Democracy Score` <span class='op'>=</span> <span class='va'>Total</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>Joined_data_extra_clean</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>`Voter Turnout`</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_histogram.html'>geom_histogram</a></span><span class='op'>(</span>binwidth <span class='op'>=</span> <span class='fl'>5</span>, fill <span class='op'>=</span> <span class='st'>"indianred"</span>, color <span class='op'>=</span> <span class='st'>"lightgrey"</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"Voter Turnout"</span>,</span>
-<span>       y <span class='op'>=</span> <span class='st'>"Number of Observations"</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>Joined_data_clean</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>`Electoral Democracy`</span>, y <span class='op'>=</span> <span class='va'>`Voter Turnout`</span>, fill <span class='op'>=</span> <span class='va'>`Electoral Democracy`</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_boxplot.html'>geom_boxplot</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
-<span>    x <span class='op'>=</span> <span class='st'>"Electoral Democracy Designation (FIW 2025)"</span>,</span>
-<span>    y <span class='op'>=</span> <span class='st'>"Voter Turnout (%)"</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='va'>Non_Democracy_Mean_Turnout</span> <span class='op'>&lt;-</span> <span class='va'>Joined_data_clean</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>`Electoral Democracy`</span><span class='op'>==</span> <span class='st'>"No"</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span><span class='op'>(</span>non_democracy_turnout <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>`Voter Turnout`</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> </span>
-<span></span>
-<span><span class='va'>Democracy_Mean_Turnout</span> <span class='op'>&lt;-</span> <span class='va'>Joined_data_clean</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>`Electoral Democracy`</span><span class='op'>==</span> <span class='st'>"Yes"</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span><span class='op'>(</span>democracy_turnout <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>`Voter Turnout`</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> </span>
-<span></span>
-<span></span>
-<span><span class='va'>Mean_Turnouts</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind_cols.html'>bind_cols</a></span><span class='op'>(</span><span class='va'>Non_Democracy_Mean_Turnout</span>, <span class='va'>Democracy_Mean_Turnout</span><span class='op'>)</span></span>
-<span><span class='va'>Mean_Turnouts</span></span>
-<span></span>
-<span><span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='va'>Mean_Turnouts</span>, digits <span class='op'>=</span> <span class='fl'>2</span>, col.names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Non Democracy Mean Turnout"</span>, <span class='st'>"Democracy Mean Turnout"</span><span class='op'>)</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='va'>regression_plot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>Joined_data_extra_clean</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>`Democracy Score`</span>, y <span class='op'>=</span> <span class='va'>`Voter Turnout`</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"darkgray"</span>, alpha <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span>method <span class='op'>=</span> <span class='st'>"lm"</span>, se <span class='op'>=</span> <span class='cn'>FALSE</span>, color <span class='op'>=</span> <span class='st'>"indianred"</span>, size <span class='op'>=</span> <span class='fl'>1.5</span><span class='op'>)</span></span>
-<span><span class='va'>regression_plot</span></span>
-<span></span>
 <span><span class='va'>regression</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>`Voter Turnout`</span> <span class='op'>~</span> <span class='va'>`Democracy Score`</span>, data <span class='op'>=</span> <span class='va'>Joined_data_extra_clean</span><span class='op'>)</span></span>
 <span></span>
 <span><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>regression</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
