@@ -113,7 +113,6 @@ Democracy_Mean_Turnout <- Joined_data_clean |>
 
 
 Mean_Turnouts <- bind_cols(Non_Democracy_Mean_Turnout, Democracy_Mean_Turnout)
-Mean_Turnouts
 
 knitr::kable(Mean_Turnouts, digits = 2, col.names = c("Non Democracy Mean Turnout", "Democracy Mean Turnout"))
 ```
@@ -132,7 +131,6 @@ regression_plot
 ### Regression Table
 ```{r, echo = FALSE}
 regression <- lm(`Voter Turnout` ~ `Democracy Score`, data = Joined_data_extra_clean)
-regression
 
 tidy(regression) |>
   knitr::kable(digits = 3, col.names = c("Term", "Estimate", "Standard Error", "Statistic", "P-Value"))
@@ -143,6 +141,8 @@ Based on this regression line, we can see that there is a positive relationship 
 ## Conclusion 
 Based on these results we found that there is a positive relationship between a country’s democracy score and its voter turnout. By looking at the voter turnout box plot and mean voter turnout by electoral democracy status we can see that on average countries that are classified as electoral democracies have higher levels of voter participation. We can also claim statistical significance based on our regression, since a p-value of 0 allows us to reject our null hypothesis. This allows us to claim that democracy level has a significant positive correlation with voter turnout. The major limitation of this study is trying to account for confounding variables since there are many differences between each country, so different variables could be influencing our results in ways that we are not aware of. If I want to improve this study, I look at the other variables from the Freedom House data(like the Civil Liberties or Political Rights category scores) to analyze which democratic score indicators have the greatest impact on voter turnout. In conclusion, I am able to affirm my original hypothesis that there is a positive relationship between democracy level and voter turnout.
 
+
+## Code
 ```{r print-code, ref.label=knitr::all_labels(), echo = TRUE, eval=FALSE}
 library(tidyverse)
 library(readxl)
